@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Undian Arisan Keluarga SOMA</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    text-align: center;
+    padding: 40px;
+}
+h1 {
+    margin-bottom: 5px;
+}
+textarea {
+    width: 300px;
+    height: 120px;
+    padding: 10px;
+}
+#nama {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 30px 0;
+    color: #d63031;
+}
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.start { background: #00b894; color: white; }
+.stop { background: #d63031; color: white; }
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.box {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+}
+ul {
+    text-align: left;
+    padding-left: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>🎁 Undian Lotre Arisan Keluarga SOMA 🎁</h1>
+<p>1 Nomor Muncul 1 kali • adil & rukun 😄</p>
+
+<textarea id="peserta">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+</textarea>
+
+<div id="nama">SIAP DIUNDI!</div>
+
+<button class="start" onclick="mulai()">START</button>
+<button class="stop" onclick="berhenti()">STOP</button>
+
+<div class="container">
+    <div class="box">
+        <h3>🏆 Riwayat Pemenang </h3>
+        <ul id="riwayat"></ul>
+    </div>
+    <div class="box">
+        <h3>👥 Sisa Nomor Undian </h3>
+        <ul id="sisa"></ul>
+    </div>
+</div>
+
+<script>
+let interval;
+let berjalan = false;
+let peserta = [];
+let indexAktif = -1;
+
+function mulai() {
+    if (!berjalan && peserta.length === 0) {
+        const text = document.getElementById("peserta").value.trim();
+        peserta = text.split("\n").filter(n => n.trim() !== "");
+        tampilkanSisa();
+    }
+
+    if (peserta.length === 0) {
+        alert("Semua peserta sudah menang 🎉");
+        return;
+    }
+
+    if (berjalan) return;
+    berjalan = true;
+
+    interval = setInterval(() => {
+        indexAktif = Math.floor(Math.random() * peserta.length);
+        document.getElementById("nama").innerText = peserta[indexAktif];
+    }, 80);
+}
+
+function berhenti() {
+    if (!berjalan) return;
+    clearInterval(interval);
+    berjalan = false;
+
+    const pemenang = peserta[indexAktif];
+
+    // Tambah ke riwayat
+    const li = document.createElement("li");
+    li.innerText = pemenang;
+    document.getElementById("riwayat").appendChild(li);
+
+    // Hapus dari peserta
+    peserta.splice(indexAktif, 1);
+    tampilkanSisa();
+}
+
+function tampilkanSisa() {
+    const ul = document.getElementById("sisa");
+    ul.innerHTML = "";
+    peserta.forEach(nama => {
+        const li = document.createElement("li");
+        li.innerText = nama;
+        ul.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
